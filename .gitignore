@@ -1,7 +1,7 @@
 *.sw*
 *.o
 *.flc
-linuxxdoom
+doom
 *.dSYM/
 GPATH
 GRTAGS

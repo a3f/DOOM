@@ -1,6 +1,6 @@
-all: linuxxdoom
+all: doom
 
-linuxxdoom:
+doom:
 	make -C linuxdoom-1.10
 
 .PHONY: deps
@@ -10,4 +10,4 @@ deps:
 .PHONY: clean
 clean:
 	make -C linuxdoom-1.10 clean
-	rm linuxxdoom
+	rm -f doom
