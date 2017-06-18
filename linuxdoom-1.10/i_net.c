@@ -163,7 +163,7 @@ void PacketGet (void)
     int			i;
     int			c;
     struct sockaddr_in	fromaddress;
-    int			fromlen;
+    unsigned	fromlen;
     doomdata_t		sw;
 				
     fromlen = sizeof(fromaddress);

@@ -6,8 +6,14 @@
 #
 CC=  gcc  # gcc or g++
 
-CFLAGS=-g -Wall -DNORMALUNIX -DLINUX # -DUSEASM 
-LDFLAGS=-L/usr/X11R6/lib
+CFLAGS=-g -std=gnu99 -m32 -Wall -DNORMALUNIX -DLINUX \
+       -Wno-error=deprecated-declarations \
+	   -Wno-enum-compare \
+	   -Wno-enum-compare \
+	   -Wno-implicit-int \
+	   -Wno-unused-but-set-variable \
+	   -Werror # -DUSEASM
+LDFLAGS=-L/usr/X11R6/lib -m32
 LIBS=-lXext -lX11 -lnsl -lm
 
 # subdirectory for objects
@@ -85,10 +91,19 @@ clean:
 
 $(O)/linuxxdoom:	$(OBJS) $(O)/i_main.o
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(O)/i_main.o \
-	-o $(O)/linuxxdoom $(LIBS)
+	-o ../linuxxdoom $(LIBS)
 
 $(O)/%.o:	%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS): | $(O)
+
+$(O):
+	mkdir -p $(O)
+
+.PHONY: deps
+deps:
+	apt-get	install	libx11-dev:i386 libxext-dev:i386 libc6-dev-i386 gcc-multilib
 
 #############################################################
 #

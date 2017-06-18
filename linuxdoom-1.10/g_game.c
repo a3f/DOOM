@@ -492,8 +492,8 @@ void G_DoLoadLevel (void)
     joyxmove = joyymove = 0; 
     mousex = mousey = 0; 
     sendpause = sendsave = paused = false; 
-    memset (mousebuttons, 0, sizeof(mousebuttons)); 
-    memset (joybuttons, 0, sizeof(joybuttons)); 
+    memset (mousebuttons, 0, sizeof(*mousebuttons)); 
+    memset (joybuttons, 0, sizeof(*joybuttons)); 
 } 
  
  
@@ -1212,8 +1212,8 @@ void G_DoLoadGame (void)
     
     // skip the description field 
     memset (vcheck,0,sizeof(vcheck)); 
-    sprintf (vcheck,"version %i",VERSION); 
-    if (strcmp (save_p, vcheck)) 
+    sprintf (vcheck,"version %u",VERSION); 
+    if (strcmp ((char*)save_p, vcheck)) 
 	return;				// bad version 
     save_p += VERSIONSIZE; 
 			 
