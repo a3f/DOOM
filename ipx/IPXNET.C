@@ -5,7 +5,6 @@
 #include <dos.h>
 #include <string.h>
 #include <process.h>
-#include <values.h>
 
 #include "ipxnet.h"
 

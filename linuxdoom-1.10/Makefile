@@ -7,14 +7,20 @@
 CC=  gcc  # gcc or g++
 
 CFLAGS=-g -std=gnu99 -m32 -Wall -DNORMALUNIX -DLINUX \
-       -Wno-error=deprecated-declarations \
-	   -Wno-enum-compare \
-	   -Wno-enum-compare \
-	   -Wno-implicit-int \
-	   -Wno-unused-but-set-variable \
-	   -Werror # -DUSEASM
+       -Wno-error=deprecated-declarations            \
+       -Wno-enum-compare                             \
+       -Wno-implicit-int                             \
+       -Wno-unused                                     \
+       -Wno-bool-compare                             \
+       -Werror # -DUSEASM
+
 LDFLAGS=-L/usr/X11R6/lib -m32
-LIBS=-lXext -lX11 -lnsl -lm
+LIBS=-lXext -lX11 -lm
+UNAME_S := $(shell uname -s)
+ifneq ($(UNAME_S),Darwin)
+	LIBS+=-lnsl
+endif
+
 
 # subdirectory for objects
 O=linux
