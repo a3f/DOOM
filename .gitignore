@@ -6,3 +6,5 @@ doom
 GPATH
 GRTAGS
 GTAGS
+.ackrc
+*.a
