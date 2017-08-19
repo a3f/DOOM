@@ -1,0 +1,22 @@
+language: c
+sudo: required
+dist: trusty
+
+os:
+  - osx
+  - linux
+
+compiler:
+  - clang
+  - gcc
+
+matrix:
+
+before_install:
+  - $CC --version
+
+before_script:
+
+script:
+  - make
+
