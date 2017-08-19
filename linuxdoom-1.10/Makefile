@@ -4,29 +4,49 @@
 #
 # $Log:$
 #
-CC=  gcc  # gcc or g++
+CC?=  gcc  # gcc or g++
 
-CFLAGS=-g -std=gnu99 -m32 -Wall -DNORMALUNIX -DLINUX \
-       -Wno-error=deprecated-declarations            \
-       -Wno-enum-compare                             \
-       -Wno-implicit-int                             \
-       -Wno-unused                                     \
-       -Wno-bool-compare                             \
-       -Werror # -DUSEASM
+ifeq ($(BARE), 1) # FIXME this should be set at ..
+    CFLAGS += -isystem ../libbaredoom -Wno-return-type -DWAD_NAME="\"DOOM1.WAD\""
+    OBJS = ../libbaredoom/libbaredoom.a
+    #OBJS = ../libbaredoom/*.o
+endif
 
-LDFLAGS=-L/usr/X11R6/lib -m32
-LIBS=-lXext -lX11 -lm
+ifeq ($(SYSTEM_X11), 1)
+    CFLAGS += -D__SYSTEM_X11=1
+endif
+ifeq ($(SYSTEM_STDIO), 1)
+    CFLAGS += -D__SYSTEM_STDIO=1
+endif
+ifeq ($(SYSTEM_UNISTD), 1)
+    CFLAGS += -D__SYSTEM_UNISTD=1
+endif
+
+CFLAGS+=-g3 -fno-builtin -std=gnu99 -Wall -DNORMALUNIX -DLINUX \
+        -Wno-error=deprecated-declarations            \
+        -Wno-enum-compare                             \
+        -Wno-implicit-int                             \
+        -Wno-unused                                   \
+        -Wno-bool-compare                             \
+
+        #-Werror # -DUSEASM
+
+LDFLAGS+= -nostdlib -L/usr/X11R6/lib
+LIBS+=-lXext -lX11 -lm
+
+
 UNAME_S := $(shell uname -s)
 ifneq ($(UNAME_S),Darwin)
 	LIBS+=-lnsl
 endif
 
+LIBS += -lc
 
 # subdirectory for objects
 O=linux
 
 # not too sophisticated dependency
-OBJS=				\
+OBJS+=				\
 		$(O)/doomdef.o		\
 		$(O)/doomstat.o		\
 		$(O)/dstrings.o		\
